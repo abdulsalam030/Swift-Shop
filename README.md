@@ -2,7 +2,7 @@
 
 A modern, responsive e-commerce store built with React, Next.js, and Tailwind CSS.
 
-## Features
+✨ Features
 
 - **Product Catalog**: Browse products with category filtering and search functionality
 - **Product Details**: Detailed product pages with image galleries and ratings
@@ -12,7 +12,7 @@ A modern, responsive e-commerce store built with React, Next.js, and Tailwind CS
 - **Responsive Design**: Mobile-first approach with optimized layouts for all devices
 - **Performance Optimized**: Lazy loading, code splitting, and image optimization
 
-## Tech Stack
+🚀 Tech Stack
 
 - **Framework**: Next.js 14 with App Router
 - **Styling**: Tailwind CSS v4 with custom design tokens
