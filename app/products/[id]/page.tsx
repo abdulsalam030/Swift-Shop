@@ -1,74 +1,82 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useParams, useRouter } from "next/navigation"
-import Link from "next/link"
-import { ArrowLeft, ShoppingCart, Heart, Share2, Truck, Shield, RotateCcw } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Header } from "@/components/header"
-import { ProductImageGallery } from "@/components/product-image-gallery"
-import { ProductRating } from "@/components/product-rating"
-import { QuantitySelector } from "@/components/quantity-selector"
-import { RecommendedProducts } from "@/components/recommended-products"
-import { useCart } from "@/contexts/cart-context"
-import { useRecentlyViewed } from "@/hooks/use-recently-viewed"
-import { getProduct } from "@/lib/api"
-import type { Product } from "@/lib/types"
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  ShoppingCart,
+  Heart,
+  Share2,
+  Truck,
+  Shield,
+  RotateCcw,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Header } from "@/components/header";
+import { ProductImageGallery } from "@/components/product-image-gallery";
+import { ProductRating } from "@/components/product-rating";
+import { QuantitySelector } from "@/components/quantity-selector";
+import { RecommendedProducts } from "@/components/recommended-products";
+import { useCart } from "@/contexts/cart-context";
+import { useRecentlyViewed } from "@/hooks/use-recently-viewed";
+import { getProduct } from "@/lib/api";
+import type { Product } from "@/lib/types";
 
 export default function ProductDetailPage() {
-  const params = useParams()
-  const router = useRouter()
-  const { addToCart } = useCart()
-  const { addToRecentlyViewed } = useRecentlyViewed()
+  const params = useParams();
+  const router = useRouter();
+  const { addToCart } = useCart();
+  const { addToRecentlyViewed } = useRecentlyViewed();
 
-  const [product, setProduct] = useState<Product | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [quantity, setQuantity] = useState(1)
-  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [quantity, setQuantity] = useState(1);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-  const productId = Number.parseInt(params.id as string)
+  const productId = Number.parseInt(params.id as string);
 
   useEffect(() => {
     const loadProduct = async () => {
-      if (!productId) return
+      if (!productId) return;
 
-      setLoading(true)
+      setLoading(true);
       try {
-        const productData = await getProduct(productId)
+        const productData = await getProduct(productId);
         if (productData) {
-          setProduct(productData)
-          addToRecentlyViewed(productData)
+          setProduct(productData);
+          addToRecentlyViewed(productData);
         } else {
-          router.push("/404")
+          router.push("/404");
         }
       } catch (error) {
-        console.error("Failed to load product:", error)
-        router.push("/404")
+        console.error("Failed to load product:", error);
+        router.push("/404");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    loadProduct()
-  }, [productId, router, addToRecentlyViewed])
+    loadProduct();
+  }, [productId, router]);
 
   const handleAddToCart = async () => {
-    if (!product) return
+    if (!product) return;
 
-    setIsAddingToCart(true)
+    setIsAddingToCart(true);
 
     // Add multiple quantities
     for (let i = 0; i < quantity; i++) {
-      addToCart(product)
+      addToCart(product);
     }
 
     // Simulate a brief loading state
     setTimeout(() => {
-      setIsAddingToCart(false)
-    }, 500)
-  }
+      setIsAddingToCart(false);
+    }, 500);
+  };
 
   if (loading) {
     return (
@@ -90,11 +98,11 @@ export default function ProductDetailPage() {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (!product) {
-    return null
+    return null;
   }
 
   return (
@@ -116,7 +124,10 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
           {/* Product Images */}
           <div>
-            <ProductImageGallery images={[product.image]} title={product.title} />
+            <ProductImageGallery
+              images={[product.image]}
+              title={product.title}
+            />
           </div>
 
           {/* Product Info */}
@@ -130,15 +141,22 @@ export default function ProductDetailPage() {
             <h1 className="text-3xl font-bold text-balance">{product.title}</h1>
 
             {/* Rating */}
-            <ProductRating rating={product.rating.rate} count={product.rating.count} />
+            <ProductRating
+              rating={product.rating.rate}
+              count={product.rating.count}
+            />
 
             {/* Price */}
-            <div className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</div>
+            <div className="text-3xl font-bold text-primary">
+              ${product.price.toFixed(2)}
+            </div>
 
             {/* Description */}
             <div>
               <h3 className="font-semibold mb-2">Description</h3>
-              <p className="text-muted-foreground leading-relaxed">{product.description}</p>
+              <p className="text-muted-foreground leading-relaxed">
+                {product.description}
+              </p>
             </div>
 
             <Separator />
@@ -147,13 +165,23 @@ export default function ProductDetailPage() {
             <div className="space-y-4">
               <div className="flex items-center gap-4">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Quantity</label>
-                  <QuantitySelector quantity={quantity} onQuantityChange={setQuantity} />
+                  <label className="text-sm font-medium mb-2 block">
+                    Quantity
+                  </label>
+                  <QuantitySelector
+                    quantity={quantity}
+                    onQuantityChange={setQuantity}
+                  />
                 </div>
               </div>
 
               <div className="flex gap-3">
-                <Button onClick={handleAddToCart} className="flex-1" size="lg" disabled={isAddingToCart}>
+                <Button
+                  onClick={handleAddToCart}
+                  className="flex-1"
+                  size="lg"
+                  disabled={isAddingToCart}
+                >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   {isAddingToCart ? "Adding..." : "Add to Cart"}
                 </Button>
@@ -189,5 +217,5 @@ export default function ProductDetailPage() {
         <RecommendedProducts currentProductId={product.id} limit={4} />
       </main>
     </div>
-  )
+  );
 }
