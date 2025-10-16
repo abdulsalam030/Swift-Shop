@@ -1,22 +1,22 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
-import { CartProvider } from "@/contexts/cart-context"
-import { Suspense } from "react"
+import type React from "react";
+import type { Metadata } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+import { CartProvider } from "@/contexts/cart-context";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "ModernStore - Your Online Shopping Destination",
-  description: "Discover amazing products at great prices. Shop electronics, clothing, jewelry and more.",
-  generator: "v0.app",
-}
+  description:
+    "Discover amazing products at great prices. Shop electronics, clothing, jewelry and more.",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -27,5 +27,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  )
+  );
 }

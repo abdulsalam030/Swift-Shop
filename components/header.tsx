@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useCallback, useEffect } from "react"
-import Link from "next/link"
-import { Search, Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { MiniCart } from "@/components/mini-cart"
-import { useDebounce } from "@/hooks/use-debounce"
+import { useState, useCallback, useEffect } from "react";
+import Link from "next/link";
+import { Search, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { MiniCart } from "@/components/mini-cart";
+import { useDebounce } from "@/hooks/use-debounce";
 
 interface HeaderProps {
-  onSearch?: (query: string) => void
+  onSearch?: (query: string) => void;
 }
 
 export function Header({ onSearch }: HeaderProps) {
-  const [searchQuery, setSearchQuery] = useState("")
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const debouncedSearchQuery = useDebounce(searchQuery, 300)
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   const handleSearch = useCallback(
     (e: React.FormEvent) => {
-      e.preventDefault()
-      onSearch?.(debouncedSearchQuery)
+      e.preventDefault();
+      onSearch?.(debouncedSearchQuery);
     },
-    [debouncedSearchQuery, onSearch],
-  )
+    [debouncedSearchQuery, onSearch]
+  );
 
   useEffect(() => {
     if (debouncedSearchQuery && onSearch) {
-      onSearch(debouncedSearchQuery)
+      onSearch(debouncedSearchQuery);
     }
-  }, [debouncedSearchQuery, onSearch])
+  }, [debouncedSearchQuery, onSearch]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -40,13 +40,18 @@ export function Header({ onSearch }: HeaderProps) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">M</span>
+              <span className="text-primary-foreground font-bold text-lg">
+                S
+              </span>
             </div>
-            <span className="font-bold text-xl text-foreground">ModernStore</span>
+            <span className="font-bold text-xl text-foreground">SwiftShop</span>
           </Link>
 
           {/* Search Bar - Hidden on mobile */}
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-8">
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex flex-1 max-w-md mx-8"
+          >
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -91,5 +96,5 @@ export function Header({ onSearch }: HeaderProps) {
         </form>
       </div>
     </header>
-  )
+  );
 }
